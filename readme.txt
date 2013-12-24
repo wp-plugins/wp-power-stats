@@ -12,7 +12,9 @@ Clean & simple statistics for your wordpress site.
 
 == Description ==
 
-This plugin gives you a quick glance at your site's visitors, page views and other aspects of your visitors.
+One click install to have an insight about your wordpress site's visitors.
+
+This easy to use plugin gives you a quick glance at your visitors's time of visits, browser, operating system and much more.
 
 == Installation ==
 
