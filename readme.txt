@@ -1,5 +1,5 @@
 === WP Power Stats ===
-Contributors: (this should be a list of wordpress.org userid's)
+Contributors: artifex404
 Donate link: http://www.websivu.com/wp-power-stats/
 Tags: statistics, stats, visit, visitors, charts, browser, analytics
 Requires at least: 3.8
