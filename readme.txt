@@ -12,9 +12,13 @@ Clean & simple statistics for your wordpress site.
 
 == Description ==
 
-One click install to have an insight about your wordpress site's visitors.
+The missing statistics feature from Wordpress is now available.
+
+One click install, and you will have an insight about your wordpress site's visitors.
 
 This easy to use plugin gives you a quick glance at your visitors's time of visits, browser, operating system and much more.
+
+The plugin is fully integrated in Wordpress, no need to write any code. Just install & enjoy!
 
 == Installation ==
 
