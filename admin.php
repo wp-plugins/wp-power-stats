@@ -89,7 +89,7 @@ foreach ($os_data as $os) {
 	$oss .= '<td class="browser os-'.strtolower($os['name']).'">'. round($os['hits'] / $os_total_hits[0] * 100) .'<span>%</span><div>'.$os['name'].'</div></td>';
 }
 
-$top_posts = $wpdb->get_results("SELECT `s`.`post_id`, `wp`.`post_title` AS `title`, SUM(`s`.`hits`) AS `hits` FROM `{$wpdb->prefix}power_stats_posts` AS `s` LEFT JOIN `w5cp_posts` AS `wp` ON (`s`.`post_id` = `wp`.`id`) GROUP BY `s`.`post_id` ORDER BY `hits` DESC LIMIT 10", ARRAY_A);
+$top_posts = $wpdb->get_results("SELECT `s`.`post_id`, `wp`.`post_title` AS `title`, SUM(`s`.`hits`) AS `hits` FROM `{$wpdb->prefix}power_stats_posts` AS `s` LEFT JOIN `{$wpdb->prefix}posts` AS `wp` ON (`s`.`post_id` = `wp`.`id`) GROUP BY `s`.`post_id` ORDER BY `hits` DESC LIMIT 10", ARRAY_A);
 $top_links = $wpdb->get_results("SELECT `referer`, `count` FROM `{$wpdb->prefix}power_stats_referers` ORDER BY `count` DESC LIMIT 10", ARRAY_A);
 $top_searches = $wpdb->get_results("SELECT `terms`, `count` FROM `{$wpdb->prefix}power_stats_searches` ORDER BY `count` DESC LIMIT 10", ARRAY_A);
 $country_data = $wpdb->get_results("SELECT `country` AS `name`, COUNT(`id`) AS `count` FROM `{$wpdb->prefix}power_stats_visits` GROUP BY `country` ORDER BY `count` DESC", ARRAY_A);
