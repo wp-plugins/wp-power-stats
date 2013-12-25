@@ -187,7 +187,7 @@ function power_stats_statistics_help() {
     if ( $screen->id != 'toplevel_page_wp-power-stats' )
         return;
 
-    $screen->add_help_tab( array(
+    $screen->add_help_tab(array(
         'id'	=> 'my_help_tab',
         'title'	=> __('Overview'),
         'content'	=> '<p>The regions on your Statistics screen are:</p>
@@ -201,8 +201,8 @@ function power_stats_statistics_help() {
 <p><strong>Top Posts</strong> - Shows the most viewed posts of your wordpress site.</p>
 <p><strong>Top Links</strong> - Shows the most common referer to your site.</p>
 <p><strong>Top Search Terms</strong> - Shows the most used keywords used to find your website.</p>
-',
-    ) );
+'
+    ));
 }
 
 
