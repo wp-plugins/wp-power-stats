@@ -117,16 +117,16 @@ function wp_power_stats_install() {
 
 function wp_power_stats_activate() {
 
-	if( is_admin() ) {
+	if (is_admin()) {
 
-		global $wpdb;
+    global $wpdb;
 
 		// check if it is a network activation - if so, run the activation function for each blog id
 		if (function_exists('is_multisite') && is_multisite()) {
        
 	        if ($networkwide) {
 
-                $old_blog = $wpdb->blogid;
+              $old_blog = $wpdb->blogid;
 
 	            // Get all blog ids
 	            $blogids = $wpdb->get_col("SELECT blog_id FROM $wpdb->blogs");
