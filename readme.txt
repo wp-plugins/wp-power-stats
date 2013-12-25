@@ -4,7 +4,7 @@ Donate link: http://www.websivu.com/wp-power-stats/
 Tags: statistics, stats, visit, visitors, charts, browser, analytics
 Requires at least: 3.8
 Tested up to: 3.8
-Stable tag: 4.3
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,7 +30,7 @@ This section describes how to install the plugin and get it working.
 
 == Frequently Asked Questions ==
 
-= The plug does not work, what should I do? =
+= The plugin does not work, what should I do? =
 
 Disable and then re-enable the plugin in the 'Plugins' menu in WordPress.
 
@@ -39,6 +39,9 @@ Disable and then re-enable the plugin in the 'Plugins' menu in WordPress.
 1. Screenshot of a sample statistics page.
 
 == Changelog ==
+
+= 1.0.1 =
+* Bugfixes: fixes errors on plugin initialization.
 
 = 1.0 =
 * Initial release.
