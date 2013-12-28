@@ -166,7 +166,7 @@ function power_stats_init() {
 	// Do not track administration backend hits
 	if( !is_admin() ) {
 		require_once(__DIR__ . '/powerStats.class.php');
-		require_once __DIR__ . '/vendor/mobile-detect/mobile-detect.php';
+		require_once __DIR__ . '/vendor/mobile-detect/Mobile_Detect.php';
 		require_once __DIR__ . '/vendor/search-terms/SearchEngines.php';
 		require_once __DIR__ . '/vendor/browser-os/Browser.php';
 		$power_stats = new PowerStats($wpdb, $table_prefix, $post);
@@ -180,11 +180,7 @@ function power_stats_statistics_help() {
 
     $screen = get_current_screen();
 
-    /*
-     * Check if current screen is My Admin Page
-     * Don't add help tab if it's not
-     */
-    if ( $screen->id != 'toplevel_page_wp-power-stats' )
+    if ($screen->id != 'toplevel_page_wp-power-stats')
         return;
 
     $screen->add_help_tab(array(
@@ -206,17 +202,15 @@ function power_stats_statistics_help() {
 }
 
 
-
 function wp_power_stats_menu() {
  
-	wp_enqueue_style('styles', plugin_dir_url(__FILE__) . 'styles/styles.css', true, '1.0');
+    wp_enqueue_style('skeleton', plugin_dir_url(__FILE__) . '/styles/grid.css', true, '1.0');
+    wp_enqueue_style('layout', plugin_dir_url(__FILE__) . '/styles/styles.css', true, '1.0');
 	
 	wp_enqueue_script('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js');
 	wp_enqueue_script('google-charts', 'https://www.google.com/jsapi');
  
-	add_menu_page('Statistics', 'Statistics', 'manage_options', 'wp-power-stats', 'wp_power_stats', 'div', 3.119);
-
-	$statistics_menu = add_submenu_page('wp-power_stats', __('Statistics', 'wp-power_stats'), __('View Stats', 'wp-power_stats'), 'manage_options', 'wp-power_stats', 'wp_power_stats');
+	$statistics_menu = add_menu_page('Statistics', 'Statistics', 'manage_options', 'wp-power-stats', 'wp_power_stats', 'dashicons-chart-pie', 3.119);
  
 	add_action('load-'.$statistics_menu, 'power_stats_statistics_help');
 	
@@ -232,10 +226,3 @@ function wp_power_stats() {
 	include_once dirname( __FILE__ ) . '/views/dashboard.php';
 
 }
-
-function wp_power_stats_settings() {
-
-	include_once dirname( __FILE__ ) . '/views/settings.php';
-	
-}
-

@@ -20,6 +20,18 @@ This beautiful & easy to use plugin gives you a quick glance at your visitors's 
 
 The plugin is fully integrated in Wordpress, no need to write any code. Just install & enjoy!
 
+Check out your visitor's:
+
+* Page views
+* Devices
+* Traffic sources
+* Browsers
+* Operating systems
+* Geographical location
+* Search terms
+* Viewed posts
+* Referer
+
 == Installation ==
 
 This section describes how to install the plugin and get it working.
@@ -36,9 +48,15 @@ Disable and then re-enable the plugin in the 'Plugins' menu in WordPress.
 
 == Screenshots ==
 
-1. Screenshot of a sample statistics page.
+1. Screenshot of the plugin.
 
 == Changelog ==
+
+= 1.0.2 =
+* Added help on plugin wordpress page
+* Updated screenshots
+* Enhanced responsive css styling
+* Removed deprecated functions
 
 = 1.0.1 =
 * Bugfixes: fixes errors on plugin initialization.
