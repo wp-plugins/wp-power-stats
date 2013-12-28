@@ -22,7 +22,7 @@ This easy to use plugin gives you a quick glance at your visitors's time of visi
 
 The plugin is fully integrated in Wordpress, which makes it fast, secure and reliable.
 
-We value privacy, that's why all collected information is stored on your server and you have full access to it.
+We value privacy, that's why all collected statistical information is stored on your server and only you have access to it.
 
 Statistics features:
 
