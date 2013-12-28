@@ -4,7 +4,7 @@ Donate link: http://www.websivu.com/wp-power-stats/
 Tags: statistics, stats, visit, visitors, charts, browser, analytics
 Requires at least: 3.8
 Tested up to: 3.8
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,7 +30,7 @@ Check out your visitor's:
 * Geographical location
 * Search terms
 * Viewed posts
-* Referer
+* Referers
 
 == Installation ==
 
