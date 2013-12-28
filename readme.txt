@@ -48,7 +48,7 @@ Disable and then re-enable the plugin in the 'Plugins' menu in WordPress.
 
 == Screenshots ==
 
-1. Screenshot of the plugin.
+1. WP Power Stats sample statistics.
 
 == Changelog ==
 
