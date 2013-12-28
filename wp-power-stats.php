@@ -29,7 +29,7 @@ if( get_option('timezone_string') ) {
 	date_default_timezone_set( get_option('timezone_string') );
 }
 	
-define('WP_POWER_STATS_VERSION', '1.0.0');
+define('WP_POWER_STATS_VERSION', '1.0.2');
 update_option('wp_power_stats_plugin_version', WP_POWER_STATS_VERSION);
 
 load_plugin_textdomain('wp_power_stats', false, plugin_basename( __DIR__ ) . '/languages/');
