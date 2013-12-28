@@ -12,17 +12,17 @@ Clean & simple statistics for your wordpress site.
 
 == Description ==
 
-Track your visitors with WP Power stats.
+Track your visitors with WP Power Stats.
 
 No need to write any code, integrate scripts or use any 3rd party services. Just install it with one click & enjoy!
 
 [View sample screenshots](http://wordpress.org/plugins/wp-power-stats/screenshots/)
 
-Be in control of your site visitors information.
-
 This easy to use plugin gives you a quick glance at your visitors's time of visits, browsers, operating systems and much more.
 
 The plugin is fully integrated in Wordpress, which makes it fast, secure and reliable.
+
+We value privacy, that's why all collected information is stored on your server and you have full access to it.
 
 Statistics features:
 
