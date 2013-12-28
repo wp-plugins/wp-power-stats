@@ -48,7 +48,8 @@ Disable and then re-enable the plugin in the 'Plugins' menu in WordPress.
 
 == Screenshots ==
 
-1. WP Power Stats sample statistics.
+1. Responsive design screenshots and some features listed.
+2. WP Power Stats sample statistics.
 
 == Changelog ==
 
