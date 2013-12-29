@@ -19,9 +19,9 @@
  * America lies on its own continental plate (i.e., the Caribbean Plate), we
  * currently use a separate continent code (amc).
  */
-if (!isset($GLOBALS['PowerStats_CountryList'])) {
+if (!isset($GLOBALS['Piwik_CountryList'])) {
     // Primary reference: ISO 3166-1 alpha-2
-    $GLOBALS['PowerStats_CountryList'] = array(
+    $GLOBALS['Piwik_CountryList'] = array(
         'ad' => 'eur',
         'ae' => 'asi',
         'af' => 'asi',
@@ -275,7 +275,7 @@ if (!isset($GLOBALS['PowerStats_CountryList'])) {
     );
 
     // codes for internal use
-    $GLOBALS['PowerStats_CountryList_Extras'] = array(
+    $GLOBALS['Piwik_CountryList_Extras'] = array(
         // unknown
         'xx'  => 'unk',
 
@@ -312,9 +312,9 @@ if (!isset($GLOBALS['PowerStats_CountryList'])) {
     );
 }
 
-if (!isset($GLOBALS['PowerStats_ContinentList'])) {
+if (!isset($GLOBALS['Piwik_ContinentList'])) {
     // Primary reference: ISO 3166-1 alpha-2
-    $GLOBALS['PowerStats_ContinentList'] = array(
+    $GLOBALS['Piwik_ContinentList'] = array(
         'unk', // unknown
         'amn', // North America
         'amc', // Central America

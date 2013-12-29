@@ -1,21 +1,79 @@
-#adminmenu .toplevel_page_wp-power-stats div.wp-menu-image:before {
-content: '\f184';
+/* Table of Content
+==================================================
+	#Wordpres overwrites
+	#Page Styles */
+
+/* #Wordpres overwrites
+================================================== */
+
+.toplevel_page_wp-power-stats .postbox-container {
+    float: none;
 }
 
-.postbox h3 {
-	cursor: default !important;
+.toplevel_page_wp-power-stats .postbox h3 {
+    cursor: default !important;
 }
 
-body.toplevel_page_wp-power-stats #wpbody-content .metabox-holder {
-	padding-top: 5px;
-	overflow: hidden;
+.toplevel_page_wp-power-stats .inside {
+    margin-bottom: 0;
 }
 
-table.summary {
+.toplevel_page_wp-power-stats .postbox {
+    min-width: 230px;
+    height: 320px;
+}
+
+/* #Page Styles
+================================================== */
+
+.postbox.micro {
+    height: 149px;
+}
+
+.half .postbox {
+    min-width: inherit;
+}
+
+.last {
+    float: right !important;
+}
+
+.inside table {
     margin: 0;
     padding: 0;
     width: 100%;
 }
+
+.inside table td {
+    width: 33%;
+}
+
+.inside.dense {
+    margin-top: 6px;
+}
+
+.inside.dense table td {
+    padding: 0;
+    margin: 0;
+}
+
+.inside table.triple td {
+    text-align: center;
+    font: 12px/12px Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif;
+    color: #777;
+}
+
+.inside table.triple td.percent {
+    padding-top: 5px;
+    font: 18px/15px Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif;
+    color: #707070;
+}
+
+.inside table.triple span {
+    font-size: 10px;
+    margin-left: 2px;
+}
+
 
 table.summary td {
     height: 20px;
@@ -28,217 +86,13 @@ table.summary td.value {
     padding-right: 4px;
 }
 
-circle {
-	stroke: #000000;
+.inside table td.order {
+    text-align: left;
+    width: 25px;
+    line-height: 22px;
 }
 
-.toplevel_page_wp-power-stats #dashboard_right_now {
-	
-}
-
-.toplevel_page_wp-power-stats #dashboard_right_now .table_content, .toplevel_page_wp-power-stats #dashboard_right_now .table_discussion {
-	width: 48%;
-}
-
-.toplevel_page_wp-power-stats .postbox {
-	height: 322px;
-}
-
-.toplevel_page_wp-power-stats .postbox.micro {
-	height: 150px;
-}
-
-.toplevel_page_wp-power-stats .postbox.double {
-	height: 494px;
-}
-
-.help-link {
-	float: right;
-	margin: 8px 15px 0 0;
-	line-height: 2;
-	padding: .2em;
-}
-
-
-.table_content, .table_discussion {
-	min-width: 140px !important;
-}
-
-.table_content td.versus-last, .table_discussion td.versus-last {
-	width: 120px;
-	text-align: left;
-}
-
-.table_content td.versus-last span, .table_discussion td.versus-last span {
-	font: 14px/18px Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif;
-	float: right;
-}
-
-.table_content td.versus-last div, .table_discussion td.versus-last div {
-	display: inline;
-	font-size: 10px;
-	padding-left: 2px;
-}
-
-.table_content td.versus-last.no-change, .table_discussion td.versus-last.no-change {
-	color: #888888;
-}
-
-.table_content td.versus-last.rises, .table_discussion td.versus-last.rises {
-	color: #0da95f;	
-}
-
-.table_content td.versus-last.falls, .table_discussion td.versus-last.falls {
-	color: #df493e;	
-}
-
-.table_devices, .table_sources, .table_browsers, .table_os {
-	width: 100%;
-	height: 100px;
-	font: 18px/18px Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif;
-	color: #707070;
-	text-align: center;
-}
-
-.table_devices div, .table_sources div, .table_browsers div, .table_os div {
-	font: 12px/18px Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif;
-	color: #777;
-}
-
-.table_devices span, .table_sources span, .table_browsers span, .table_os span {
-	font-size: 10px;
-	margin-left: 2px;
-}
-
-.desktop, .tablet, .mobile, .source-search, .source-links, .source-direct {
-	padding-top: 35px;
-	width: 33%;
-}
-
-.browser, .os {
-	padding-top: 50px;
-	width: 33%;
-}
-
-.desktop {
-	background: transparent url('../images/desktop.png') no-repeat center 4px;
-}
-
-.tablet {
-	background: transparent url('../images/tablet.png') no-repeat center 4px;
-}
-
-.mobile {
-	background: transparent url('../images/mobile.png') no-repeat center 4px;
-}
-
-.source-search {
-	background: transparent url('../images/search.png') no-repeat center 4px;
-}
-
-.source-links {
-	background: transparent url('../images/link.png') no-repeat center 4px;
-}
-
-.source-direct {
-	background: transparent url('../images/direct.png') no-repeat center 4px;
-}
-
-.browser-firefox {
-	background: transparent url('../images/firefox.png') no-repeat center 0;
-}
-
-.browser-chrome {
-	background: transparent url('../images/chrome.png') no-repeat center 0;
-}
-
-.browser-ie {
-	background: transparent url('../images/ie.png') no-repeat center 0;
-}
-
-.browser-unknown {
-	background: transparent url('../images/unknown.png') no-repeat center 0;
-}
-
-.os-mac {
-	background: transparent url('../images/mac.png') no-repeat center 0;
-}
-
-.os-windows {
-	background: transparent url('../images/windows.png') no-repeat center 0;
-}
-
-.os-linux {
-	background: transparent url('../images/linux.png') no-repeat center 0;
-}
-
-.os-unknown {
-	background: transparent url('../images/unknown.png') no-repeat center 0;
-}
-
-.top-posts {
-	height: 100%;
-	line-height: 16pt;
-	vertical-align: middle;
-	line-height: 18px;
-	width: 100%;
-	border-spacing: 2px;
-}
-
-.top-posts td {
-	padding: 3px 0 3px 0;
-}
-
-.top-posts .link {
-	padding: 6px 0 0 3px;
-}
-
-.top-posts .order {
-	font-size: 18px;
-	color: #21759b;
-	font-family: Georgia,"Times New Roman","Bitstream Charter",Times,serif;
-	text-align: right;
-}
-
-@media only screen and (max-width: 1260px) {
-
-	#summary{
-		height: 322px !important;
-	}
-
-	.table_discussion {
-		clear: both;
-		float: left !important;
-		margin-top: 45px !important;
-	}
-	
-	.table_content, .table_discussion {
-		width: 100% !important;
-	}
-	
-	.large-only {
-		clear: none;
-	}
-	
-	#visitors_page_views {
-		height: 494px !important;
-	}
-	
-
-}
-
-@media only screen and (min-width: 799px) {
-
-	.two-columns {
-		width: 66% !important;
-	}
-	
-	.one-column {
-		width: 33% !important;
-	}
-
-	.postbox {
-		min-width: 200px;
-	}
-	
+.inside table td.link {
+    text-align: left;
+    width: auto;
 }

@@ -49,7 +49,7 @@ class PowerStats {
 	
 	public function is_new_visitor() {
 
-		if ($_SESSION['wp-power-stats'] == 1) return false;
+		if (isset($_SESSION['wp-power-stats']) && $_SESSION['wp-power-stats'] == 1) return false;
 		return true;
 
 	}
@@ -393,7 +393,7 @@ class PowerStats {
 		$matched = 0;
 		
 		foreach($os_list as $match => $os) {
-	        if (eregi($match, $user_agent)) {
+	        if (preg_match("/$match/i", $user_agent)) {
 				$matched = 1;
 				break;
 	        }
