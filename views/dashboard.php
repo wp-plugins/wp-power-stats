@@ -55,9 +55,9 @@
                                 <table class="triple">
                                     <tbody>
                                         <tr>
-                                            <td><img src="<?= plugins_url('wp-power-stats/images/desktop.png') ?>" alt="Desktop"></td>
-                                            <td><img src="<?= plugins_url('wp-power-stats/images/tablet.png') ?>" alt="Tablet"></td>
-                                            <td><img src="<?= plugins_url('wp-power-stats/images/mobile.png') ?>" alt="Mobile"></td>
+                                            <td><img src="<?php echo plugins_url('wp-power-stats/images/desktop.png') ?>" alt="Desktop"></td>
+                                            <td><img src="<?php echo plugins_url('wp-power-stats/images/tablet.png') ?>" alt="Tablet"></td>
+                                            <td><img src="<?php echo plugins_url('wp-power-stats/images/mobile.png') ?>" alt="Mobile"></td>
                                         </tr>
                                         <tr>
                                             <td class="percent"><?php echo $desktop ?><span>%</span></td>
@@ -172,9 +172,9 @@
                                 <table class="triple">
                                     <tbody>
                                         <tr>
-                                            <td><img src="<?= plugins_url('wp-power-stats/images/search.png') ?>" alt="Search Engine"></td>
-                                            <td><img src="<?= plugins_url('wp-power-stats/images/link.png') ?>" alt="Link"></td>
-                                            <td><img src="<?= plugins_url('wp-power-stats/images/direct.png') ?>" alt="Direct"></td>
+                                            <td><img src="<?php echo plugins_url('wp-power-stats/images/search.png') ?>" alt="Search Engine"></td>
+                                            <td><img src="<?php echo plugins_url('wp-power-stats/images/link.png') ?>" alt="Link"></td>
+                                            <td><img src="<?php echo plugins_url('wp-power-stats/images/direct.png') ?>" alt="Direct"></td>
                                         </tr>
                                         <tr>
                                             <td class="percent"><?php echo $search_engines ?><span>%</span></td>
