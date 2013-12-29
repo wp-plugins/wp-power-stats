@@ -197,7 +197,7 @@
                                 <table class="triple">
                                     <tbody>
                                         <tr>
-                                            <?php foreach ($browsers as $browser) : ?><td><img src="<?php echo plugins_url('wp-power-stats/images/'.$browser['image'].'.png') ?>" alt="<?php echo $browser['name'] ?>"></td><?php endforeach ?>
+                                            <?php foreach ($browsers as $browser) : ?><?php $browser_icon = (file_exists(plugin_dir_path(__FILE__).'../images/'.$browser['image'].'.png')) ? plugins_url('wp-power-stats/images/'.$browser['image'].'.png') : plugins_url('wp-power-stats/images/unknown.png'); ?><td><img src="<?php echo $browser_icon ?>" alt="<?php echo $browser['name'] ?>"></td><?php endforeach ?>
                                         </tr>
                                         <tr>
                                             <?php foreach ($browsers as $browser) : ?><td class="percent"><?php echo $browser['percent'] ?><span>%</span></td><?php endforeach ?>
@@ -216,7 +216,7 @@
                                 <table class="triple">
                                     <tbody>
                                         <tr>
-                                            <?php foreach ($oss as $os) : ?><td><img src="<?php echo plugins_url('wp-power-stats/images/'.$os['image'].'.png') ?>" alt="<?php echo $os['name'] ?>"></td><?php endforeach ?>
+                                            <?php foreach ($oss as $os) : ?><?php $os_icon = (file_exists(plugin_dir_path(__FILE__).'../images/'.$os['image'].'.png')) ? plugins_url('wp-power-stats/images/'.$os['image'].'.png') : plugins_url('wp-power-stats/images/unknown.png'); ?><td><img src="<?php echo $os_icon ?>" alt="<?php echo $os['name'] ?>"></td><?php endforeach ?>
                                         </tr>
                                         <tr>
                                             <?php foreach ($oss as $os) : ?><td class="percent"><?php echo $os['percent'] ?><span>%</span></td><?php endforeach ?>
