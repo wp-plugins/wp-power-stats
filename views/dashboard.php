@@ -1,6 +1,6 @@
 <div class="wrap">
 
-    <h2>Overview</h2>
+    <h2><?php _e('Overview','wp-power-stats') ?></h2>
     
     <div class="container">
         <div class="metabox-holder">
@@ -10,7 +10,7 @@
                 <div class="cell">
                     <div class="postbox-container">
                         <div class="postbox micro">
-                            <h3>Summary</h3>
+                            <h3><?php _e('Summary','wp-power-stats') ?></h3>
     
                             <div class="inside">
                             
@@ -18,26 +18,26 @@
                                     <thead>
                                         <tr>
                                             <td></td>
-                                            <td class="value">Visitors</td>
-                                            <td class="value">Pageviews</td>
+                                            <td class="value"><?php _e('Visitors','wp-power-stats') ?></td>
+                                            <td class="value"><?php _e('Pageviews','wp-power-stats') ?></td>
                                         </tr>
                                     </thead>
     
                                     <tbody>
                                         <tr>
-                                            <td>Today</td>
+                                            <td><?php _e('Today','wp-power-stats') ?></td>
                                             <td class="value"><?php echo $today_visits[0] ?></td>
                                             <td class="value"><?php echo $today_pageviews[0] ?></td>
                                         </tr>
     
                                         <tr>
-                                            <td>This Week</td>
+                                            <td><?php _e('This Week','wp-power-stats') ?></td>
                                             <td class="value"><?php echo $this_week_visits[0] ?></td>
                                             <td class="value"><?php echo $this_week_pageviews[0] ?></td>
                                         </tr>
     
                                         <tr>
-                                            <td>This Month</td>
+                                            <td><?php _e('This Month','wp-power-stats') ?></td>
                                             <td class="value"><?php echo $this_month_visits[0] ?></td>
                                             <td class="value"><?php echo $this_month_pageviews[0] ?></td>
                                         </tr>
@@ -48,16 +48,16 @@
                         </div><!-- postbox -->
     
                         <div class="postbox micro">
-                            <h3>Devices</h3>
+                            <h3><?php _e('Devices','wp-power-stats') ?></h3>
     
                             <div class="inside">
                             
                                 <table class="triple">
                                     <tbody>
                                         <tr>
-                                            <td><img src="<?php echo plugins_url('wp-power-stats/images/desktop.png') ?>" alt="Desktop"></td>
-                                            <td><img src="<?php echo plugins_url('wp-power-stats/images/tablet.png') ?>" alt="Tablet"></td>
-                                            <td><img src="<?php echo plugins_url('wp-power-stats/images/mobile.png') ?>" alt="Mobile"></td>
+                                            <td><img src="<?php echo plugins_url('wp-power-stats/images/desktop.png') ?>" alt="<?php _e('Desktop','wp-power-stats') ?>"></td>
+                                            <td><img src="<?php echo plugins_url('wp-power-stats/images/tablet.png') ?>" alt="<?php _e('Tablet','wp-power-stats') ?>"></td>
+                                            <td><img src="<?php echo plugins_url('wp-power-stats/images/mobile.png') ?>" alt="<?php _e('Mobile','wp-power-stats') ?>"></td>
                                         </tr>
                                         <tr>
                                             <td class="percent"><?php echo $desktop ?><span>%</span></td>
@@ -65,9 +65,9 @@
                                             <td class="percent"><?php echo $mobile ?><span>%</span></td>
                                         </tr>
                                         <tr>
-                                            <td>Desktop</td>
-                                            <td>Tablet</td>
-                                            <td>Mobile</td>
+                                            <td><?php _e('Desktop','wp-power-stats') ?></td>
+                                            <td><?php _e('Tablet','wp-power-stats') ?></td>
+                                            <td><?php _e('Mobile','wp-power-stats') ?></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -84,7 +84,7 @@
     
         			<div class="postbox-container">
     					<div class="postbox double-height">
-    						<h3><span>Visitors & Page Views</span></h3>
+    						<h3><span><?php _e('Visitors & Page Views','wp-power-stats') ?></span></h3>
     					
     						<div class="inside">
     
@@ -106,7 +106,7 @@
         						      google.setOnLoadCallback(drawChart);
         						      function drawChart() {
         						        var data = google.visualization.arrayToDataTable([
-        						          ['Year', 'Page Views', 'Visitors'],
+        						          ['<?php _e('Year','wp-power-stats') ?>', '<?php _e('Page Views','wp-power-stats') ?>', '<?php _e('Visitors','wp-power-stats') ?>'],
         						          <?php echo $data_array; ?>
         						        ]);
         						
@@ -167,14 +167,14 @@
                     <div class="postbox-container">
     
                         <div class="postbox micro">
-                            <h3>Traffic Source</h3>
+                            <h3><?php _e('Traffic Source','wp-power-stats') ?></h3>
                             <div class="inside">
                                 <table class="triple">
                                     <tbody>
                                         <tr>
-                                            <td><img src="<?php echo plugins_url('wp-power-stats/images/search.png') ?>" alt="Search Engine"></td>
-                                            <td><img src="<?php echo plugins_url('wp-power-stats/images/link.png') ?>" alt="Link"></td>
-                                            <td><img src="<?php echo plugins_url('wp-power-stats/images/direct.png') ?>" alt="Direct"></td>
+                                            <td><img src="<?php echo plugins_url('wp-power-stats/images/search.png') ?>" alt="<?php _e('Search Engine','wp-power-stats') ?>"></td>
+                                            <td><img src="<?php echo plugins_url('wp-power-stats/images/link.png') ?>" alt="<?php _e('Link','wp-power-stats') ?>"></td>
+                                            <td><img src="<?php echo plugins_url('wp-power-stats/images/direct.png') ?>" alt="<?php _e('Direct','wp-power-stats') ?>"></td>
                                         </tr>
                                         <tr>
                                             <td class="percent"><?php echo $search_engines ?><span>%</span></td>
@@ -182,9 +182,9 @@
                                             <td class="percent"><?php echo $direct ?><span>%</span></td>
                                         </tr>
                                         <tr>
-                                            <td>Search Engine</td>
-                                            <td>Links</td>
-                                            <td>Direct</td>
+                                            <td><?php _e('Search Engine','wp-power-stats') ?></td>
+                                            <td><?php _e('Links','wp-power-stats') ?></td>
+                                            <td><?php _e('Direct','wp-power-stats') ?></td>
                                         </tr>
                                     </tbody>
                                 </table>        
@@ -192,7 +192,7 @@
                         </div><!-- postbox -->
                         
                         <div class="postbox micro">
-                            <h3>Browsers</h3>
+                            <h3><?php _e('Browsers','wp-power-stats') ?></h3>
                             <div class="inside dense">
                                 <table class="triple">
                                     <tbody>
@@ -211,7 +211,7 @@
                         </div><!-- postbox -->
                         
                         <div class="postbox micro">
-                            <h3>Operating Systems</h3>
+                            <h3><?php _e('Operating Systems','wp-power-stats') ?></h3>
                             <div class="inside dense">
                                 <table class="triple">
                                     <tbody>
@@ -240,7 +240,7 @@
     
         			<div class="postbox-container">
     					<div class="postbox triple-height">
-    						<h3><span>Visitors & Page Views</span></h3>
+    						<h3><span><?php _e('Visitor Map','wp-power-stats') ?></span></h3>
     					
     						<div class="inside">
     
@@ -292,7 +292,7 @@
                     <div class="postbox-container">
     
                         <div class="postbox">
-                            <h3>Top Posts</h3>
+                            <h3><?php _e('Top Posts','wp-power-stats') ?></h3>
                             <div class="inside">
                                 <table>
                                     <tbody>
@@ -318,7 +318,7 @@
                         
                 			<div class="postbox-container">
             					<div class="postbox">
-            						<h3><span>Top Links</span></h3>
+            						<h3><span><?php _e('Top Links','wp-power-stats') ?></span></h3>
             						<div class="inside">
                                         <table>
                                             <tbody>
@@ -339,12 +339,12 @@
                 
                             <div class="postbox-container">
             					<div class="postbox">
-            						<h3><span>Top Search Terms</span></h3>
+            						<h3><span><?php _e('Top Search Terms','wp-power-stats') ?></span></h3>
             						<div class="inside">
                                         <table>
                                             <tbody>
-                								<?php $i=1; foreach ($top_links as $link): ?>
-                								<tr><td class="order"><?php echo $i ?>.</td><td class="link"><a href=""><?php echo substr($link['referer'], 0, 50) ?></a></td></tr>
+                								<?php $i=1; foreach ($top_searches as $search): ?>
+                								<tr><td class="order"><?php echo $i ?>.</td><td class="link"><a href=""><?php echo substr($search['terms'], 0, 50) ?></a></td></tr>
                 								<?php $i++; endforeach; ?>
                                             </tbody>
                                         </table>

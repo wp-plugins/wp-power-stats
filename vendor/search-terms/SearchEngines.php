@@ -56,8 +56,8 @@
  * Another example using a regular expression to parse the path for keywords:
  *  'infospace.com'         => array('InfoSpace', array('/dir1\/(pattern)\/dir2/'), '/dir1/{k}/dir2/stuff/'),
  */
-if (!isset($GLOBALS['Piwik_SearchEngines'])) {
-    $GLOBALS['Piwik_SearchEngines'] = array(
+if (!isset($GLOBALS['PowerStats_SearchEngines'])) {
+    $GLOBALS['PowerStats_SearchEngines'] = array(
         // 1
         '1.cz'                           => array('1.cz', array('/s\/([^\/]+)/', 'q'), 's/{k}', 'iso-8859-2'),
 
@@ -1033,10 +1033,10 @@ if (!isset($GLOBALS['Piwik_SearchEngines'])) {
         'www.zoznam.sk'                  => array('Zoznam', 's', 'hladaj.fcgi?s={k}&co=svet'),
     );
 
-    $GLOBALS['Piwik_SearchEngines_NameToUrl'] = array();
-    foreach ($GLOBALS['Piwik_SearchEngines'] as $url => $info) {
-        if (!isset($GLOBALS['Piwik_SearchEngines_NameToUrl'][$info[0]])) {
-            $GLOBALS['Piwik_SearchEngines_NameToUrl'][$info[0]] = $url;
+    $GLOBALS['PowerStats_SearchEngines_NameToUrl'] = array();
+    foreach ($GLOBALS['PowerStats_SearchEngines'] as $url => $info) {
+        if (!isset($GLOBALS['PowerStats_SearchEngines_NameToUrl'][$info[0]])) {
+            $GLOBALS['PowerStats_SearchEngines_NameToUrl'][$info[0]] = $url;
         }
     }
 }

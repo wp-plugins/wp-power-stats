@@ -280,9 +280,9 @@ class PowerStats {
 	
 	protected function set_country() {
 		
-		require_once __DIR__ . '/vendor/geolite/autoload.php';
+		require_once WP_POWER_STATS_PLUGIN_DIR . '/vendor/geoip/geoip.inc';
 
-		$gi = geoip_open(__DIR__ . '/vendor/geolite/GeoIP.dat', GEOIP_STANDARD);
+		$gi = geoip_open(WP_POWER_STATS_PLUGIN_DIR . '/vendor/geoip/GeoIP.dat', GEOIP_STANDARD);
 		$this->country = geoip_country_code_by_addr($gi, $this->get_ip());
 		
 		geoip_close($gi);
@@ -443,7 +443,7 @@ class PowerStats {
      */
     public static function getCountriesList($includeInternalCodes = false) {
     
-        require_once __DIR__ . '/vendor/search-terms/Countries.php';
+        require_once WP_POWER_STATS_PLUGIN_DIR . '/vendor/search-terms/Countries.php';
 
         $countriesList = $GLOBALS['PowerStats_CountryList'];
         $extras = $GLOBALS['PowerStats_CountryList_Extras'];
