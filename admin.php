@@ -74,9 +74,10 @@ $browser_total_hits = $wpdb->get_row("SELECT SUM(`count`) AS `total_hits` FROM `
 
 $browsers = array();
 $translations = array("internet explorer" => "ie");
+$browser_names = array("Unknown" => __('Unknown','wp-power-stats'));
 
 foreach ($browser_data as $browser) {
-    $browsers[] = array("image" => strtr(strtolower($browser['name']), $translations), "percent" => round($browser['hits'] / $browser_total_hits[0] * 100), "name" => $browser['name']);
+    $browsers[] = array("image" => strtr(strtolower($browser['name']), $translations), "percent" => round($browser['hits'] / $browser_total_hits[0] * 100), "name" => strtr(ucfirst($browser['name']), $browser_names));
 }
 
 
@@ -84,9 +85,10 @@ $os_data = $wpdb->get_results("SELECT `os` AS `name`, `count` AS `hits` FROM `{$
 $os_total_hits = $wpdb->get_row("SELECT SUM(`count`) AS `total_hits` FROM `{$wpdb->prefix}power_stats_os`", ARRAY_N);
 
 $oss = array();
+$os_names = array("Unknown" => __('Unknown','wp-power-stats'));
 
 foreach ($os_data as $os) {
-    $oss[] = array("image" => strtolower($os['name']), "percent" => round($os['hits'] / $os_total_hits[0] * 100), "name" => $os['name']);
+    $oss[] = array("image" => strtolower($os['name']), "percent" => round($os['hits'] / $os_total_hits[0] * 100), "name" => strtr(ucfirst($os['name']), $browser_names));
 }
 
 $top_posts = $wpdb->get_results("SELECT `s`.`post_id`, `wp`.`post_title` AS `title`, SUM(`s`.`hits`) AS `hits` FROM `{$wpdb->prefix}power_stats_posts` AS `s` LEFT JOIN `{$wpdb->prefix}posts` AS `wp` ON (`s`.`post_id` = `wp`.`id`) GROUP BY `s`.`post_id` ORDER BY `hits` DESC LIMIT 10", ARRAY_A);

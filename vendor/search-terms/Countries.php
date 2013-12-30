@@ -4,9 +4,6 @@
  *
  * @link http://piwik.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
- *
- * @category Piwik
- * @package DataFiles
  */
 
 /**
@@ -19,9 +16,9 @@
  * America lies on its own continental plate (i.e., the Caribbean Plate), we
  * currently use a separate continent code (amc).
  */
-if (!isset($GLOBALS['Piwik_CountryList'])) {
+if (!isset($GLOBALS['PowerStats_CountryList'])) {
     // Primary reference: ISO 3166-1 alpha-2
-    $GLOBALS['Piwik_CountryList'] = array(
+    $GLOBALS['PowerStats_CountryList'] = array(
         'ad' => 'eur',
         'ae' => 'asi',
         'af' => 'asi',
@@ -275,7 +272,7 @@ if (!isset($GLOBALS['Piwik_CountryList'])) {
     );
 
     // codes for internal use
-    $GLOBALS['Piwik_CountryList_Extras'] = array(
+    $GLOBALS['PowerStats_CountryList_Extras'] = array(
         // unknown
         'xx'  => 'unk',
 
@@ -312,9 +309,9 @@ if (!isset($GLOBALS['Piwik_CountryList'])) {
     );
 }
 
-if (!isset($GLOBALS['Piwik_ContinentList'])) {
+if (!isset($GLOBALS['PowerStats_ContinentList'])) {
     // Primary reference: ISO 3166-1 alpha-2
-    $GLOBALS['Piwik_ContinentList'] = array(
+    $GLOBALS['PowerStats_ContinentList'] = array(
         'unk', // unknown
         'amn', // North America
         'amc', // Central America

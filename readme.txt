@@ -1,10 +1,10 @@
 === WP Power Stats ===
 Contributors: artifex404
 Donate link: http://www.websivu.com/wp-power-stats/
-Tags: statistics, stats, visit, visitors, charts, browser, analytics
+Tags: statistics, stats, visit, visits, visitor, visitors, charts, analytics, tracker
 Requires at least: 3.8
 Tested up to: 3.8
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -57,10 +57,15 @@ Disable and then re-enable the plugin in the 'Plugins' menu in WordPress.
 
 == Changelog ==
 
+= 1.0.3 =
+* Added browser icons
+* Added Russian translation
+* Fixes bugs with older PHP version
+* Fixes bug with keywords
+
 = 1.0.2 =
-* Added help on plugin wordpress page
-* Updated screenshots
-* Enhanced responsive css styling
+* Added help tab
+* Enhanced responsive design
 * Removed deprecated functions
 
 = 1.0.1 =
