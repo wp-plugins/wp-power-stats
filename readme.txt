@@ -14,7 +14,7 @@ Clean & simple statistics for your wordpress site.
 
 Track your visitors with WP Power Stats.
 
-No need to write any code, integrate scripts or use any 3rd party services. Just install it with one click & enjoy!
+No need to write any code, integrate scripts or use any 3rd party services. Just install with one click & enjoy!
 
 [View sample screenshots](http://wordpress.org/plugins/wp-power-stats/screenshots/)
 
