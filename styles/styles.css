@@ -96,3 +96,13 @@ table.summary td.value {
     text-align: left;
     width: auto;
 }
+
+.toplevel_page_wp-power-stats .postbox.fit-height {
+    height: 100%;
+    min-height: 320px;
+}
+
+.fit-height {
+    height: 100%;
+    min-height: 320px;
+}

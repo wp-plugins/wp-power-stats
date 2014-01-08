@@ -1583,13 +1583,15 @@ function geoip_country_code_by_name_v6($gi, $name)
     return false;
 }
 
-function geoip_country_code_by_name($gi, $name)
-{
-    $country_id = geoip_country_id_by_name($gi, $name);
-    if ($country_id !== false) {
-        return $gi->GEOIP_COUNTRY_CODES[$country_id];
+if (!function_exists('geoip_country_code_by_name')) {
+    function geoip_country_code_by_name($gi, $name)
+    {
+        $country_id = geoip_country_id_by_name($gi, $name);
+        if ($country_id !== false) {
+            return $gi->GEOIP_COUNTRY_CODES[$country_id];
+        }
+        return false;
     }
-    return false;
 }
 
 function geoip_country_name_by_name_v6($gi, $name)
@@ -1633,22 +1635,20 @@ function geoip_country_code_by_addr_v6($gi, $addr)
     return false;
 }
 
-if (!function_exists('geoip_country_code_by_addr')) {
-    function geoip_country_code_by_addr($gi, $addr)
-    {
-        if ($gi->databaseType == GEOIP_CITY_EDITION_REV1) {
-            $record = geoip_record_by_addr($gi, $addr);
-            if ($record !== false) {
-                return $record->country_code;
-            }
-        } else {
-            $country_id = geoip_country_id_by_addr($gi, $addr);
-            if ($country_id !== false) {
-                return $gi->GEOIP_COUNTRY_CODES[$country_id];
-            }
+function geoip_country_code_by_addr($gi, $addr)
+{
+    if ($gi->databaseType == GEOIP_CITY_EDITION_REV1) {
+        $record = geoip_record_by_addr($gi, $addr);
+        if ($record !== false) {
+            return $record->country_code;
         }
-        return false;
+    } else {
+        $country_id = geoip_country_id_by_addr($gi, $addr);
+        if ($country_id !== false) {
+            return $gi->GEOIP_COUNTRY_CODES[$country_id];
+        }
     }
+    return false;
 }
 
 function geoip_country_name_by_addr_v6($gi, $addr)
