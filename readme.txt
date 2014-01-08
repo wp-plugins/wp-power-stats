@@ -14,7 +14,9 @@ Clean & simple statistics for your wordpress site.
 
 Know your visitors: browsers, operatings systems, visitors and much more!
 
-No need to write code, insert scripts or use any 3rd party services. Install with one click & enjoy!
+No need to write code, insert scripts or use any 3rd party services.
+
+Install with one click & enjoy!
 
 This lightweight plugin is fully integrated in Wordpress, which makes it fast, secure and reliable.
 
