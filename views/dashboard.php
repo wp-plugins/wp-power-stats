@@ -298,7 +298,7 @@
                                     <tbody>
 
                                         <?php $i=1; foreach ($top_posts as $post): ?>
-        								<tr><td class="order"><?php echo $i ?>.</td><td class="link"><a href=""><?php echo $post['title'] ?></a></td></tr>
+        								<tr><td class="order"><?php echo $i ?>.</td><td class="link"><a href="<?php echo get_permalink($post['post_id']) ?>"><?php echo $post['title'] ?></a></td></tr>
         								<?php $i++; endforeach; ?>
 
                                     </tbody>

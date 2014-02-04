@@ -3,7 +3,7 @@
 Plugin Name: Power Stats
 Plugin URI: http://www.websivu.com/wp-power-stats/
 Description: Clean & simple statistics for your wordpress site.
-Version: 1.1
+Version: 1.1.1
 Author: Igor Buyanov
 Text Domain: wp-power-stats
 Author URI: http://www.websivu.com
@@ -31,7 +31,7 @@ if( get_option('timezone_string') ) {
 }
 
 	
-define('WP_POWER_STATS_VERSION', '1.1');
+define('WP_POWER_STATS_VERSION', '1.1.1');
 update_option('wp_power_stats_plugin_version', WP_POWER_STATS_VERSION);
 
 if (!defined('WP_POWER_STATS_PLUGIN_DIR')) define('WP_POWER_STATS_PLUGIN_DIR', untrailingslashit(dirname(__FILE__)));
@@ -230,7 +230,7 @@ function wp_power_stats_statistics_help() {
 
     $screen->add_help_tab(array(
         'id'	=> 'my_help_tab',
-        'title'	=> __('Overview'),
+        'title'	=> __('Overview','wp-power-stats'),
         'content'	=> '<p>'.__('The regions on your Statistics screen are:','wp-power-stats').'</p>
 <p><strong>'.__('Summary','wp-power-stats').'</strong> - '.__('Shows the number of visitors and page views during different time periods: today, this week, this month.','wp-power-stats').'</p>
 <p><strong>'.__('Devices','wp-power-stats').'</strong> - '.__('Shows the top 3 devices your visitors are using.','wp-power-stats').'</p>
