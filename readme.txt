@@ -3,8 +3,8 @@ Contributors: artifex404
 Donate link: http://www.websivu.com/wp-power-stats/
 Tags: statistics, stats, visit, visits, visitor, visitors, charts, analytics, tracker
 Requires at least: 3.3
-Tested up to: 3.8
-Stable tag: 1.1.1
+Tested up to: 3.9
+Stable tag: 1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -36,6 +36,15 @@ Statistics features:
 * Viewed posts
 * Referers
 
+Available in different languages:
+
+* English
+* French
+* Spanish
+* Finnish
+* Hungarian
+* Russian
+
 == Installation ==
 
 This section describes how to install the plugin and get it working.
@@ -60,6 +69,13 @@ They are located in 'Statistics' section under 'Settings' menu.
 2. WP Power Stats sample statistics.
 
 == Changelog ==
+
+= 1.2 =
+* New feature: Added a setting to select roles that can view statistics
+* New feature: Added a setting to select roles that can change statistics settings
+* Updated: Mobile device detection
+* Added French language (Olivier)
+* Added Spanish language (Luciano)
 
 = 1.1.1 =
 * Added Hungarian language (Halas)

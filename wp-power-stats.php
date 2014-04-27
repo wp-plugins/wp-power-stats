@@ -3,7 +3,7 @@
 Plugin Name: Power Stats
 Plugin URI: http://www.websivu.com/wp-power-stats/
 Description: Clean & simple statistics for your wordpress site.
-Version: 1.1.1
+Version: 1.2
 Author: Igor Buyanov
 Text Domain: wp-power-stats
 Author URI: http://www.websivu.com
@@ -26,12 +26,12 @@ License: A "Slug" license name e.g. GPL2
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-if( get_option('timezone_string') ) {
-	date_default_timezone_set( get_option('timezone_string') );
+if (get_option('timezone_string')) {
+	date_default_timezone_set(get_option('timezone_string'));
 }
 
 	
-define('WP_POWER_STATS_VERSION', '1.1.1');
+define('WP_POWER_STATS_VERSION', '1.2');
 update_option('wp_power_stats_plugin_version', WP_POWER_STATS_VERSION);
 
 if (!defined('WP_POWER_STATS_PLUGIN_DIR')) define('WP_POWER_STATS_PLUGIN_DIR', untrailingslashit(dirname(__FILE__)));
@@ -113,6 +113,11 @@ function wp_power_stats_install() {
 	dbDelta($create_searches);
 	dbDelta($create_visits);
 	dbDelta($create_referers);
+	
+    $role = get_role("administrator");
+    $role->add_cap('wp_power_stats_view');
+    $role->add_cap('wp_power_stats_configure');
+	
 }
 
 // Initialize widget
@@ -178,21 +183,157 @@ add_action('plugins_loaded', 'intern');
 
 function wp_power_stats_settings_init() {
 
+    $role = get_role("administrator");
+    $role->add_cap('wp_power_stats_view');
+    $role->add_cap('wp_power_stats_configure');
+
 	add_settings_section('wp_power_stats_setting_section', 'WP Power Stats', 'wp_power_stats_section_callback', 'wp-power-stats-settings');
-	add_settings_field('ignore_hits', __('Ignore hits from','wp-power-stats'), 'wp_power_stats_setting_callback', 'wp-power-stats-settings', 'wp_power_stats_setting_section');
+	add_settings_field('ignore_hits', __('Ignore hits from','wp-power-stats'), 'wp_power_stats_setting_ignore_hits', 'wp-power-stats-settings', 'wp_power_stats_setting_section');
+	add_settings_field('view_statistics', __('View privileges','wp-power-stats'), 'wp_power_stats_setting_view_roles', 'wp-power-stats-settings', 'wp_power_stats_setting_section');
+    add_settings_field('manage_statistics', __('Configuration privileges','wp-power-stats'), 'wp_power_stats_configuration_roles', 'wp-power-stats-settings', 'wp_power_stats_setting_section');
 	register_setting('wp-power-stats-settings', 'wp_power_stats_ignore_admins');
 	register_setting('wp-power-stats-settings', 'wp_power_stats_ignore_bots');
+	register_setting('wp-power-stats-settings', 'wp_power_stats_view_roles', 'wp_power_stats_save_view_roles');
+	register_setting('wp-power-stats-settings', 'wp_power_stats_configuration_roles', 'wp_power_stats_save_configuration_roles');
 	
 }
 add_action('admin_init', 'wp_power_stats_settings_init');
+
+
+
+function wp_statistics_clean_capability($roles, $capability) {
+
+	global $wp_roles;
+	
+	if (is_array($roles)) {
+	
+    	$role_list = $wp_roles->get_names();
+    
+    	foreach ($wp_roles->roles as $role) {
+    
+            if (!in_array(strtolower($role['name']), $roles)) {
+            
+                $role = get_role(strtolower($role['name']));
+                $role->remove_cap($capability);
+            }
+    
+    	}
+	
+	}
+
+}
+
+function wp_power_stats_save_view_roles($input) {
+
+    global $wp_roles, $current_user;
+    
+    if (is_array($input) && !in_array("administrator", $input)) $input[] = "administrator";
+    
+    if (is_array($input)) {
+
+        foreach ($input as $role) {
+            
+            // get the role object
+            $role = get_role($role);
+         
+            // add "wp_power_stats_view" to this role object
+            $role->add_cap('wp_power_stats_view');   
+            
+        }        
+        
+    } else {
+        
+        // get the administrator role object
+        $role = get_role("administrator");
+         
+        // add "wp_power_stats_view" to this role object
+        $role->add_cap('wp_power_stats_view');
+    
+    }
+    
+    wp_statistics_clean_capability($input, "wp_power_stats_view");
+    
+    if (is_array($input)) return implode($input, ",");
+    else return $input;
+}
+
+function wp_power_stats_save_configuration_roles($input) {
+
+    global $current_user;
+    
+    if (is_array($input) && !in_array("administrator", $input)) $input[] = "administrator";
+    
+    if (is_array($input)) {
+
+        foreach ($input as $role) {
+            
+            // get the role object
+            $role = get_role($role);
+         
+            // add "wp_power_stats_view" to this role object
+            $role->add_cap('wp_power_stats_configure');   
+            
+        }        
+        
+    } else {
+        
+        // get the administrator role object
+        $role = get_role("administrator");
+         
+        // add "wp_power_stats_view" to this role object
+        $role->add_cap('wp_power_stats_configure');
+    
+    }
+    
+    wp_statistics_clean_capability($input, "wp_power_stats_configure");
+    
+    return implode($input, ",");
+}
 
 
 function wp_power_stats_section_callback() {
 
 }
 
+function wp_power_stats_configuration_roles() {
 
-function wp_power_stats_setting_callback() {
+    global $wp_roles;
+
+	$roles = $wp_roles->get_names();
+    $roles_options = '';
+    
+    $read_roles = explode(",", get_option('wp_power_stats_configuration_roles','administrator'));
+    
+    if (is_array($read_roles) && !in_array("administrator", $read_roles)) $read_roles[] = "administrator";
+    
+	foreach ($roles as $key => $cap) {
+		$selected = (is_array($read_roles) && in_array($key, $read_roles)) ? " selected" : "";
+		$roles_options .= "<option value='{$key}'{$selected}>{$key}</option>";
+	}
+
+    echo '<fieldset><label for="wp_power_stats_configuration_roles[]"><select id="wp_power_stats_configuration_roles[]" size="6" multiple height="6" name="wp_power_stats_configuration_roles[]">'. $roles_options .'</select></label><p class="description">Select roles that can alter wp power stats settings. Administrator is always selected.</p></fieldset><br />';
+}
+
+function wp_power_stats_setting_view_roles() {
+
+    global $wp_roles;
+
+	$roles = $wp_roles->get_names();
+    $roles_options = '';
+    
+    $read_roles = explode(",", get_option('wp_power_stats_view_roles','administrator'));
+    
+    if (is_array($read_roles) && !in_array("administrator", $read_roles)) $read_roles[] = "administrator";
+    
+	foreach ($roles as $key => $cap) {
+		$selected = (is_array($read_roles) && in_array($key, $read_roles)) ? " selected" : "";
+		$roles_options .= "<option value='{$key}'{$selected}>{$key}</option>";
+	}
+
+    echo '<fieldset><label for="wp_power_stats_view_roles[]"><select id="wp_power_stats_view_roles[]" size="6" multiple height="6" name="wp_power_stats_view_roles[]">'. $roles_options .'</select></label><p class="description">Select roles that can view statistics. Administrator is always selected.</p></fieldset><br />';
+}
+
+function wp_power_stats_setting_ignore_hits() {
     echo '<fieldset><label for="wp_power_stats_ignore_admins"><input name="wp_power_stats_ignore_admins" id="wp_power_stats_ignore_admins" type="checkbox" value="1" class="code" ' . checked( 1, get_option('wp_power_stats_ignore_admins'), false ) . ' /> '. __('Administrators','wp-power-stats') .'</label><br />';
     echo '<label for="wp_power_stats_ignore_bots"><input name="wp_power_stats_ignore_bots" id="wp_power_stats_ignore_bots" type="checkbox" value="1" class="code" ' . checked( 1, get_option('wp_power_stats_ignore_bots'), false ) . ' /> '. __('Bots','wp-power-stats') .'</label></fieldset>';
 }
@@ -245,23 +386,49 @@ function wp_power_stats_statistics_help() {
     ));
 }
 
+function current_role_capability() {
+    global $current_user;
+
+	$current_role = reset($current_user->roles);
+	$role = get_role($current_role);
+
+	foreach ($role->capabilities as $key => $capability) {
+		return $key;
+	}
+	
+     
+}
+
+function wp_power_stats_manage_capability() {
+  return current_role_capability();
+}
+
+add_filter('option_page_capability_wp-power-stats-settings', 'wp_power_stats_manage_capability');
 
 function wp_power_stats_menu() {
 
     $wp_version = get_bloginfo('version');
- 
-    wp_enqueue_style('grid', plugin_dir_url(__FILE__) . '/styles/grid.css', true, '1.0');
-    wp_enqueue_style('layout', plugin_dir_url(__FILE__) . '/styles/styles.css', true, '1.0');
-	if (doubleval($wp_version) < 3.8) {wp_enqueue_style('layout-fix', plugin_dir_url(__FILE__) . '/styles/styles-before-3.8.css', true, '1.0');}
-	
-	wp_enqueue_script('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js');
-	wp_enqueue_script('google-charts', 'https://www.google.com/jsapi');	
     
-    $power_stats_icon = (doubleval($wp_version) >= 3.8) ? "dashicons-chart-pie" : "div";
-    $statistics_menu = add_menu_page(__('Statistics','wp-power-stats'), __('Statistics','wp-power-stats'), 'manage_options', 'wp-power-stats', 'wp_power_stats', $power_stats_icon, 3.119);
-    $settings_menu = add_submenu_page('options-general.php', __('Statistics','wp-power-stats'), __('Statistics','wp-power-stats'), 'manage_options', 'wp-power-stats-settings', 'wp_power_stats_settings');  
- 
-	add_action('load-'.$statistics_menu, 'wp_power_stats_statistics_help');
+    if (current_user_can('wp_power_stats_view') || current_user_can('manage_options')) {
+    
+        wp_enqueue_style('grid', plugin_dir_url(__FILE__) . '/styles/grid.css', true, '1.0');
+        wp_enqueue_style('layout', plugin_dir_url(__FILE__) . '/styles/styles.css', true, '1.0');
+    	if (doubleval($wp_version) < 3.8) {wp_enqueue_style('layout-fix', plugin_dir_url(__FILE__) . '/styles/styles-before-3.8.css', true, '1.0');}
+    	
+    	wp_enqueue_script('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js');
+    	wp_enqueue_script('google-charts', 'https://www.google.com/jsapi');	
+        
+        $power_stats_icon = (doubleval($wp_version) >= 3.8) ? "dashicons-chart-pie" : "div";
+        $statistics_menu = add_menu_page(__('Statistics','wp-power-stats'), __('Statistics','wp-power-stats'), current_role_capability(), 'wp-power-stats', 'wp_power_stats', $power_stats_icon, 3.119);
+        add_action('load-'.$statistics_menu, 'wp_power_stats_statistics_help');
+        
+    }
+    
+    if (current_user_can('wp_power_stats_configure') || current_user_can('manage_options')) {
+
+        $settings_menu = add_submenu_page('options-general.php', __('Statistics','wp-power-stats'), __('Statistics','wp-power-stats'), current_role_capability(), 'wp-power-stats-settings', 'wp_power_stats_settings');
+
+    }
 	
 }
 add_action('admin_menu', 'wp_power_stats_menu');
