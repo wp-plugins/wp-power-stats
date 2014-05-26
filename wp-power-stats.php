@@ -3,7 +3,7 @@
 Plugin Name: Power Stats
 Plugin URI: http://www.websivu.com/wp-power-stats/
 Description: Clean & simple statistics for your wordpress site.
-Version: 1.3
+Version: 1.3.1
 Author: Igor Buyanov
 Text Domain: wp-power-stats
 Author URI: http://www.websivu.com
@@ -31,7 +31,7 @@ if (get_option('timezone_string')) {
 }
 
 	
-define('WP_POWER_STATS_VERSION', '1.3');
+define('WP_POWER_STATS_VERSION', '1.3.1');
 update_option('wp_power_stats_plugin_version', WP_POWER_STATS_VERSION);
 
 if (!defined('WP_POWER_STATS_PLUGIN_DIR')) define('WP_POWER_STATS_PLUGIN_DIR', untrailingslashit(dirname(__FILE__)));
@@ -186,6 +186,12 @@ function wp_power_stats_settings_init() {
     $role = get_role("administrator");
     $role->add_cap('wp_power_stats_view');
     $role->add_cap('wp_power_stats_configure');
+    
+    register_setting('wp-power-stats-settings', 'wp_power_stats_view_roles', 'wp_power_stats_save_view_roles');
+	register_setting('wp-power-stats-settings', 'wp_power_stats_configuration_roles', 'wp_power_stats_save_configuration_roles');
+    register_setting('wp-power-stats-settings', 'wp_power_stats_ignore_admins');
+	register_setting('wp-power-stats-settings', 'wp_power_stats_ignore_bots');
+	register_setting('wp-power-stats-settings', 'wp_power_stats_ip_exclusion', 'wp_power_stats_save_ip_exclusion');
 
 	add_settings_section('wp_power_stats_setting_access_section', 'Access Levels', 'wp_power_stats_access_section', 'wp-power-stats-settings');
 	add_settings_section('wp_power_stats_setting_exclusion_section', 'Exclusions', 'wp_power_stats_exclusion_section', 'wp-power-stats-settings');
@@ -197,24 +203,17 @@ add_action('admin_init', 'wp_power_stats_settings_init');
 function wp_power_stats_access_section() {
 
     _e('<p>Customize which user roles have access to the statistics and the settings of WP Power Stats.</p>','wp-power-stats');
-
 	add_settings_field('view_statistics', __('View','wp-power-stats'), 'wp_power_stats_setting_view_roles', 'wp-power-stats-settings', 'wp_power_stats_setting_access_section');
     add_settings_field('manage_statistics', __('Configuration','wp-power-stats'), 'wp_power_stats_configuration_roles', 'wp-power-stats-settings', 'wp_power_stats_setting_access_section');
-	register_setting('wp-power-stats-settings', 'wp_power_stats_view_roles', 'wp_power_stats_save_view_roles');
-	register_setting('wp-power-stats-settings', 'wp_power_stats_configuration_roles', 'wp_power_stats_save_configuration_roles');
-
+	
 }
 
 
 function wp_power_stats_exclusion_section() {
 
     _e('<p>Configure which statistics are not logged.</p>','wp-power-stats');
-
     add_settings_field('ignore_hits', __('Ignore hits from','wp-power-stats'), 'wp_power_stats_setting_ignore_hits', 'wp-power-stats-settings', 'wp_power_stats_setting_exclusion_section');
     add_settings_field('ip_exclusion', __('Excluded IP addresses','wp-power-stats'), 'wp_power_stats_ip_exclusion', 'wp-power-stats-settings', 'wp_power_stats_setting_exclusion_section');
-	register_setting('wp-power-stats-settings', 'wp_power_stats_ignore_admins');
-	register_setting('wp-power-stats-settings', 'wp_power_stats_ignore_bots');
-	register_setting('wp-power-stats-settings', 'wp_power_stats_ip_exclusion', 'wp_power_stats_save_ip_exclusion');
 
 }
 

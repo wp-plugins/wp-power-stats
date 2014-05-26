@@ -4,7 +4,7 @@ Donate link: http://www.websivu.com/wp-power-stats/
 Tags: statistics, stats, visit, visits, visitor, visitors, charts, analytics, tracker
 Requires at least: 3.3
 Tested up to: 3.9
-Stable tag: 1.3
+Stable tag: 1.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -69,6 +69,9 @@ They are located in 'WP Power Stats' section under 'Settings' menu.
 2. WP Power Stats sample statistics.
 
 == Changelog ==
+
+= 1.3.1 =
+* Fixes a bug when saving options. Thank you 'myplugins' and 'michaldunaj' for reporting.
 
 = 1.3 =
 * New feature: You can now exclude IP addresses from statistics
