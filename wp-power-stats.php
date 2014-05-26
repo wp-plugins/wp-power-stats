@@ -3,7 +3,7 @@
 Plugin Name: Power Stats
 Plugin URI: http://www.websivu.com/wp-power-stats/
 Description: Clean & simple statistics for your wordpress site.
-Version: 1.2
+Version: 1.3
 Author: Igor Buyanov
 Text Domain: wp-power-stats
 Author URI: http://www.websivu.com
@@ -31,7 +31,7 @@ if (get_option('timezone_string')) {
 }
 
 	
-define('WP_POWER_STATS_VERSION', '1.2');
+define('WP_POWER_STATS_VERSION', '1.3');
 update_option('wp_power_stats_plugin_version', WP_POWER_STATS_VERSION);
 
 if (!defined('WP_POWER_STATS_PLUGIN_DIR')) define('WP_POWER_STATS_PLUGIN_DIR', untrailingslashit(dirname(__FILE__)));
@@ -187,18 +187,36 @@ function wp_power_stats_settings_init() {
     $role->add_cap('wp_power_stats_view');
     $role->add_cap('wp_power_stats_configure');
 
-	add_settings_section('wp_power_stats_setting_section', 'WP Power Stats', 'wp_power_stats_section_callback', 'wp-power-stats-settings');
-	add_settings_field('ignore_hits', __('Ignore hits from','wp-power-stats'), 'wp_power_stats_setting_ignore_hits', 'wp-power-stats-settings', 'wp_power_stats_setting_section');
-	add_settings_field('view_statistics', __('View privileges','wp-power-stats'), 'wp_power_stats_setting_view_roles', 'wp-power-stats-settings', 'wp_power_stats_setting_section');
-    add_settings_field('manage_statistics', __('Configuration privileges','wp-power-stats'), 'wp_power_stats_configuration_roles', 'wp-power-stats-settings', 'wp_power_stats_setting_section');
-	register_setting('wp-power-stats-settings', 'wp_power_stats_ignore_admins');
-	register_setting('wp-power-stats-settings', 'wp_power_stats_ignore_bots');
-	register_setting('wp-power-stats-settings', 'wp_power_stats_view_roles', 'wp_power_stats_save_view_roles');
-	register_setting('wp-power-stats-settings', 'wp_power_stats_configuration_roles', 'wp_power_stats_save_configuration_roles');
+	add_settings_section('wp_power_stats_setting_access_section', 'Access Levels', 'wp_power_stats_access_section', 'wp-power-stats-settings');
+	add_settings_section('wp_power_stats_setting_exclusion_section', 'Exclusions', 'wp_power_stats_exclusion_section', 'wp-power-stats-settings');
 	
 }
 add_action('admin_init', 'wp_power_stats_settings_init');
 
+
+function wp_power_stats_access_section() {
+
+    _e('<p>Customize which user roles have access to the statistics and the settings of WP Power Stats.</p>','wp-power-stats');
+
+	add_settings_field('view_statistics', __('View','wp-power-stats'), 'wp_power_stats_setting_view_roles', 'wp-power-stats-settings', 'wp_power_stats_setting_access_section');
+    add_settings_field('manage_statistics', __('Configuration','wp-power-stats'), 'wp_power_stats_configuration_roles', 'wp-power-stats-settings', 'wp_power_stats_setting_access_section');
+	register_setting('wp-power-stats-settings', 'wp_power_stats_view_roles', 'wp_power_stats_save_view_roles');
+	register_setting('wp-power-stats-settings', 'wp_power_stats_configuration_roles', 'wp_power_stats_save_configuration_roles');
+
+}
+
+
+function wp_power_stats_exclusion_section() {
+
+    _e('<p>Configure which statistics are not logged.</p>','wp-power-stats');
+
+    add_settings_field('ignore_hits', __('Ignore hits from','wp-power-stats'), 'wp_power_stats_setting_ignore_hits', 'wp-power-stats-settings', 'wp_power_stats_setting_exclusion_section');
+    add_settings_field('ip_exclusion', __('Excluded IP addresses','wp-power-stats'), 'wp_power_stats_ip_exclusion', 'wp-power-stats-settings', 'wp_power_stats_setting_exclusion_section');
+	register_setting('wp-power-stats-settings', 'wp_power_stats_ignore_admins');
+	register_setting('wp-power-stats-settings', 'wp_power_stats_ignore_bots');
+	register_setting('wp-power-stats-settings', 'wp_power_stats_ip_exclusion', 'wp_power_stats_save_ip_exclusion');
+
+}
 
 
 function wp_statistics_clean_capability($roles, $capability) {
@@ -221,6 +239,64 @@ function wp_statistics_clean_capability($roles, $capability) {
 	
 	}
 
+}
+
+function is_valid_mask($mask) {
+
+    $validMasks = array('255.255.255.255','255.255.255.254','255.255.255.252','255.255.255.248','255.255.255.240','255.255.255.224','255.255.255.192','255.255.255.128','255.255.255.0','255.255.254.0','255.255.252.0','255.255.248.0','255.255.240.0','255.255.224.0','255.255.192.0','255.255.128.0','255.255.0.0','255.254.0.0','255.252.0.0','255.248.0.0','255.240.0.0','255.224.0.0','255.192.0.0','255.128.0.0','255.0.0.0','254.0.0.0','252.0.0.0','248.0.0.0','240.0.0.0','224.0.0.0','192.0.0.0','128.0.0.0','0.0.0.0');
+    
+    return (in_array($mask, $validMasks)) ? true : false;
+}
+
+function wp_power_stats_save_ip_exclusion($input) {
+    
+    if (!empty($input)) {
+    
+        $input_ip = array();
+        $validated_ip = array();
+    
+        if (strstr($input, "\n")) $input_ip = explode("\n", $input);
+        else $input_ip[] = $input;
+
+        foreach ($input_ip as $ip) {
+        
+            if (strstr($ip, "/")) { // matches mask
+                
+                $arr_ip = explode("/", $ip);
+                $ip = $arr_ip[0];
+                $mask = $arr_ip[1];
+                
+                if (strlen($mask) > 0 && strlen($mask) <= 2 && $mask > 0 && $mask <= 32) { // 192.168.0.0/24
+                    
+                    $filtered = filter_var(trim($ip), FILTER_VALIDATE_IP);
+                    if (!empty($filtered)) $validated_ip[] = $filtered . "/" . $mask;
+                    
+                } else { // 192.168.0.0/255.255.255.0
+                    
+                    if (is_valid_mask($mask)) {
+                        
+                        $filtered = filter_var(trim($ip), FILTER_VALIDATE_IP);
+                        if (!empty($filtered)) $validated_ip[] = $filtered . "/" . $mask;
+                        
+                    }
+                    
+                }
+                
+            } else { // 192.168.0.0
+            
+                $filtered = filter_var(trim($ip), FILTER_VALIDATE_IP);
+                if (!empty($filtered)) $validated_ip[] = $filtered; 
+                
+            }
+            
+        }        
+    
+        return implode("\n", $validated_ip);
+        
+    }
+
+    return "";
+    
 }
 
 function wp_power_stats_save_view_roles($input) {
@@ -253,7 +329,7 @@ function wp_power_stats_save_view_roles($input) {
     
     wp_statistics_clean_capability($input, "wp_power_stats_view");
     
-    if (is_array($input)) return implode($input, ",");
+    if (is_array($input)) return implode(",", $input);
     else return $input;
 }
 
@@ -287,12 +363,33 @@ function wp_power_stats_save_configuration_roles($input) {
     
     wp_statistics_clean_capability($input, "wp_power_stats_configure");
     
-    return implode($input, ",");
+    return implode(",", $input);
 }
 
+function wp_power_stats_get_ip() {
+	
+	    $ip_keys = array('HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'REMOTE_ADDR');
 
-function wp_power_stats_section_callback() {
+	    foreach ($ip_keys as $key) {
+	        if (array_key_exists($key, $_SERVER) === true) {
+	            foreach (explode(',', $_SERVER[$key]) as $ip) {
+	                $ip = filter_var(trim($ip), FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE);
+	            }
+	        }
+	    }
+	    
+	    if (!empty($ip)) return $ip;
+	    else return "";
+	    
+	}
 
+function wp_power_stats_ip_exclusion() {
+
+    $ip_exclusion = get_option('wp_power_stats_ip_exclusion');
+
+    echo '<fieldset><textarea name="wp_power_stats_ip_exclusion" id="" cols="30" rows="5">'. $ip_exclusion .'</textarea><p class="description">' . __('Enter IP addresses to exclude from statistics. One IP address/range per line.','wp-power-stats') .'<br />'. __('Accepted formats: 192.168.0.0, 192.168.0.0/24 and 192.168.0.0/255.255.255.0','wp-power-stats') .'</p></fieldset><br />';
+    
+    if (wp_power_stats_get_ip()) echo '<input name="" id="" class="button action" value="Add '. wp_power_stats_get_ip() .'" type="button" onclick="var el = jQuery(this).prev().prev(\'fieldset\').children(\'textarea\'); if (el.val()) el.val(el.val() + \'\n\'); el.val(el.val() + \''. wp_power_stats_get_ip() .'\')" /> <p class="description">'. __('This is your current address.','wp-power-stats') .'</p>';
 }
 
 function wp_power_stats_configuration_roles() {
@@ -302,7 +399,7 @@ function wp_power_stats_configuration_roles() {
 	$roles = $wp_roles->get_names();
     $roles_options = '';
     
-    $read_roles = explode(",", get_option('wp_power_stats_configuration_roles','administrator'));
+    $read_roles = explode(",", get_option('wp_power_stats_configuration_roles', 'administrator'));
     
     if (is_array($read_roles) && !in_array("administrator", $read_roles)) $read_roles[] = "administrator";
     
@@ -311,7 +408,7 @@ function wp_power_stats_configuration_roles() {
 		$roles_options .= "<option value='{$key}'{$selected}>{$key}</option>";
 	}
 
-    echo '<fieldset><label for="wp_power_stats_configuration_roles[]"><select id="wp_power_stats_configuration_roles[]" size="6" multiple height="6" name="wp_power_stats_configuration_roles[]">'. $roles_options .'</select></label><p class="description">Select roles that can alter wp power stats settings. Administrator is always selected.</p></fieldset><br />';
+    echo '<fieldset><label for="wp_power_stats_configuration_roles[]"><select id="wp_power_stats_configuration_roles[]" size="6" multiple height="6" name="wp_power_stats_configuration_roles[]">'. $roles_options .'</select></label><p class="description">'. __('Select roles that can change WP Power Stats settings. Administrator is always selected.','wp-power-stats') .'</p></fieldset><br />';
 }
 
 function wp_power_stats_setting_view_roles() {
@@ -321,7 +418,7 @@ function wp_power_stats_setting_view_roles() {
 	$roles = $wp_roles->get_names();
     $roles_options = '';
     
-    $read_roles = explode(",", get_option('wp_power_stats_view_roles','administrator'));
+    $read_roles = explode(",", get_option('wp_power_stats_view_roles', 'administrator'));
     
     if (is_array($read_roles) && !in_array("administrator", $read_roles)) $read_roles[] = "administrator";
     
@@ -330,7 +427,7 @@ function wp_power_stats_setting_view_roles() {
 		$roles_options .= "<option value='{$key}'{$selected}>{$key}</option>";
 	}
 
-    echo '<fieldset><label for="wp_power_stats_view_roles[]"><select id="wp_power_stats_view_roles[]" size="6" multiple height="6" name="wp_power_stats_view_roles[]">'. $roles_options .'</select></label><p class="description">Select roles that can view statistics. Administrator is always selected.</p></fieldset><br />';
+    echo '<fieldset><label for="wp_power_stats_view_roles[]"><select id="wp_power_stats_view_roles[]" size="6" multiple height="6" name="wp_power_stats_view_roles[]">'. $roles_options .'</select></label><p class="description">'. __('Select roles that can view statistics. Administrator is always selected.','wp-power-stats') .'</p></fieldset><br />';
 }
 
 function wp_power_stats_setting_ignore_hits() {
@@ -338,10 +435,45 @@ function wp_power_stats_setting_ignore_hits() {
     echo '<label for="wp_power_stats_ignore_bots"><input name="wp_power_stats_ignore_bots" id="wp_power_stats_ignore_bots" type="checkbox" value="1" class="code" ' . checked( 1, get_option('wp_power_stats_ignore_bots'), false ) . ' /> '. __('Bots','wp-power-stats') .'</label></fieldset>';
 }
 
+function net_match($network, $ip) {
+
+    $ip_arr = explode('/', $network);
+    
+    if (!isset($ip_arr[1])) $ip_arr[1] = 0;
+    
+    $network_long = ip2long($ip_arr[0]);
+    
+    $x = ip2long($ip_arr[1]);
+    $mask =  long2ip($x) == $ip_arr[1] ? $x : 0xffffffff << (32 - $ip_arr[1]);
+    $ip_long = ip2long($ip);
+    
+    return ($ip_long & $mask) == ($network_long & $mask);
+}
+
+function current_ip_ignored() {
+    
+    $trigger = false;
+
+	$ignore_ips = explode("\n", get_option('wp_power_stats_ip_exclusion'));
+	$current_ip = wp_power_stats_get_ip();
+	
+	foreach($ignore_ips as $ip) {
+		$ip = trim($ip);
+		
+		if(strlen($ip) > 6) {
+			if (net_match($ip, $current_ip)) {
+                $trigger = true;
+			}
+		}
+	}
+	
+    return $trigger;
+    
+}
 
 function wp_power_stats_ignore() {
 
-    return (get_option('wp_power_stats_ignore_admins') && current_user_can('manage_options')) ? true : false; 
+    return ((get_option('wp_power_stats_ignore_admins') && current_user_can('manage_options')) || current_ip_ignored()) ? true : false; 
 
 }
  
@@ -350,7 +482,7 @@ function wp_power_stats_init() {
 	
 	global $wpdb, $table_prefix, $post;
 	
-	if (!is_admin() && !wp_power_stats_ignore()) { // Do not track administration backend hits and admin roles hits on site if the setting is set
+	if (!is_admin() && !wp_power_stats_ignore()) { // Do not track administration backend hits and site hits if meets the criterias
 		require_once WP_POWER_STATS_PLUGIN_DIR . '/powerStats.class.php';
 		require_once WP_POWER_STATS_PLUGIN_DIR . '/vendor/mobile-detect/Mobile_Detect.php';
 		require_once WP_POWER_STATS_PLUGIN_DIR . '/vendor/search-terms/SearchEngines.php';
@@ -426,7 +558,7 @@ function wp_power_stats_menu() {
     
     if (current_user_can('wp_power_stats_configure') || current_user_can('manage_options')) {
 
-        $settings_menu = add_submenu_page('options-general.php', __('Statistics','wp-power-stats'), __('Statistics','wp-power-stats'), current_role_capability(), 'wp-power-stats-settings', 'wp_power_stats_settings');
+        $settings_menu = add_submenu_page('options-general.php', __('WP Power Stats','wp-power-stats'), __('WP Power Stats','wp-power-stats'), current_role_capability(), 'wp-power-stats-settings', 'wp_power_stats_settings');
 
     }
 	

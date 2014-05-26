@@ -39,10 +39,12 @@ class PowerStatsWidget extends WP_Widget {
         $now = current_time('mysql', 1); // in UTC
         $week_mode = ($week_start == 1) ? 1 : 0;
 
+        $total_visits = $wpdb->get_row("SELECT COUNT(id) FROM `{$wpdb->prefix}power_stats_visits`", ARRAY_N);
         $today_visits = $wpdb->get_row("SELECT COUNT(id) FROM `{$wpdb->prefix}power_stats_visits` WHERE DATE(`date`) = DATE('". $now ."')", ARRAY_N);
         $this_week_visits = $wpdb->get_row("SELECT COUNT(id) FROM `{$wpdb->prefix}power_stats_visits` WHERE WEEK(`date`, $week_mode) = WEEK('". $now ."', $week_mode)", ARRAY_N);
         $this_month_visits = $wpdb->get_row("SELECT COUNT(id) FROM `{$wpdb->prefix}power_stats_visits` WHERE MONTH(`date`) = MONTH('". $now ."')", ARRAY_N);
         
+        $total_pageviews = $wpdb->get_row("SELECT SUM(`hits`) FROM `{$wpdb->prefix}power_stats_pageviews`", ARRAY_N);
         $today_pageviews = $wpdb->get_row("SELECT SUM(`hits`) FROM `{$wpdb->prefix}power_stats_pageviews` WHERE DATE(`date`) = DATE('". $now ."')", ARRAY_N);
         $this_week_pageviews = $wpdb->get_row("SELECT SUM(`hits`) FROM `{$wpdb->prefix}power_stats_pageviews` WHERE WEEK(`date`, $week_mode) = WEEK('". $now ."', $week_mode)", ARRAY_N);
         $this_month_pageviews = $wpdb->get_row("SELECT SUM(`hits`) FROM `{$wpdb->prefix}power_stats_pageviews` WHERE MONTH(`date`) = MONTH('". $now ."')", ARRAY_N);
@@ -61,6 +63,11 @@ class PowerStatsWidget extends WP_Widget {
         
         $table .='
         <tbody>
+            <tr>
+                <td>'. __('Total','wp-power-stats') .'</td>
+                <td class="value">'. $total_visits[0] .'</td>
+                <td class="value">'. $total_pageviews[0] .'</td>
+            </tr>
             <tr>
                 <td>'. __('Today','wp-power-stats') .'</td>
                 <td class="value">'. $today_visits[0] .'</td>
