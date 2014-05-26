@@ -291,14 +291,14 @@
                 <div class="cell">
                     <div class="postbox-container">
     
-                        <div class="postbox">
+                        <div class="postbox fit-height">
                             <h3><?php _e('Top Posts','wp-power-stats') ?></h3>
                             <div class="inside">
                                 <table>
                                     <tbody>
 
                                         <?php $i=1; foreach ($top_posts as $post): ?>
-        								<tr><td class="order"><?php echo $i ?>.</td><td class="link"><a href=""><?php echo substr($post['title'], 0, 50) ?></a></td></tr>
+        								<tr><td class="order"><?php echo $i ?>.</td><td class="link"><a href="<?php echo get_permalink($post['post_id']) ?>"><?php echo $post['title'] ?></a></td></tr>
         								<?php $i++; endforeach; ?>
 
                                     </tbody>
@@ -317,13 +317,13 @@
                         <div class="cell">
                         
                 			<div class="postbox-container">
-            					<div class="postbox">
+            					<div class="postbox fit-height">
             						<h3><span><?php _e('Top Links','wp-power-stats') ?></span></h3>
             						<div class="inside">
                                         <table>
                                             <tbody>
                 								<?php $i=1; foreach ($top_links as $link): ?>
-                								<tr><td class="order"><?php echo $i ?>.</td><td class="link"><a href=""><?php echo substr($link['referer'], 0, 50) ?></a></td></tr>
+                								<tr><td class="order"><?php echo $i ?>.</td><td class="link"><a href="<?php echo $link['referer'] ?>" target="_blank"><?php echo $link['referer'] ?></a></td></tr>
                 								<?php $i++; endforeach; ?>
                                             </tbody>
                                         </table>
@@ -338,13 +338,13 @@
                         <div class="cell">
                 
                             <div class="postbox-container">
-            					<div class="postbox">
+            					<div class="postbox fit-height">
             						<h3><span><?php _e('Top Search Terms','wp-power-stats') ?></span></h3>
             						<div class="inside">
                                         <table>
                                             <tbody>
                 								<?php $i=1; foreach ($top_searches as $search): ?>
-                								<tr><td class="order"><?php echo $i ?>.</td><td class="link"><a href=""><?php echo substr($search['terms'], 0, 50) ?></a></td></tr>
+                								<tr><td class="order"><?php echo $i ?>.</td><td class="link"><?php echo $search['terms'] ?></td></tr>
                 								<?php $i++; endforeach; ?>
                                             </tbody>
                                         </table>
