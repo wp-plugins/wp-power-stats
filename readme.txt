@@ -71,7 +71,7 @@ They are located in 'WP Power Stats' section under 'Settings' menu.
 == Changelog ==
 
 = 1.3.1 =
-* Fixes a bug when saving options. Thank you 'myplugins' and 'michaldunaj' for reporting.
+* Fixes a bug when saving options. Thank you 'myplugins', 'michaldunaj' and 'davegiannini' for reporting.
 
 = 1.3 =
 * New feature: You can now exclude IP addresses from statistics

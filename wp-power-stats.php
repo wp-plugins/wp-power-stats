@@ -231,7 +231,7 @@ function wp_statistics_clean_capability($roles, $capability) {
             if (!in_array(strtolower($role['name']), $roles)) {
             
                 $role = get_role(strtolower($role['name']));
-                $role->remove_cap($capability);
+                if (is_object($role)) $role->remove_cap($capability);
             }
     
     	}
