@@ -3,7 +3,7 @@
 Plugin Name: Power Stats
 Plugin URI: http://www.websivu.com/wp-power-stats/
 Description: Clean & simple statistics for your wordpress site.
-Version: 1.3.1
+Version: 1.3.2
 Author: Igor Buyanov
 Text Domain: wp-power-stats
 Author URI: http://www.websivu.com
@@ -31,7 +31,7 @@ if (get_option('timezone_string')) {
 }
 
 	
-define('WP_POWER_STATS_VERSION', '1.3.1');
+define('WP_POWER_STATS_VERSION', '1.3.2');
 update_option('wp_power_stats_plugin_version', WP_POWER_STATS_VERSION);
 
 if (!defined('WP_POWER_STATS_PLUGIN_DIR')) define('WP_POWER_STATS_PLUGIN_DIR', untrailingslashit(dirname(__FILE__)));
@@ -115,8 +115,10 @@ function wp_power_stats_install() {
 	dbDelta($create_referers);
 	
     $role = get_role("administrator");
-    $role->add_cap('wp_power_stats_view');
-    $role->add_cap('wp_power_stats_configure');
+    if (is_object($role) && method_exists($role, 'add_cap')) {
+        $role->add_cap('wp_power_stats_view');
+        $role->add_cap('wp_power_stats_configure');
+    }
 	
 }
 
@@ -222,22 +224,15 @@ function wp_statistics_clean_capability($roles, $capability) {
 
 	global $wp_roles;
 	
-	if (is_array($roles)) {
-	
+	if (is_array($roles) && !empty($roles)) {
     	$role_list = $wp_roles->get_names();
-    
-    	foreach ($wp_roles->roles as $role) {
-    
-            if (!in_array(strtolower($role['name']), $roles)) {
-            
-                $role = get_role(strtolower($role['name']));
-                if (is_object($role)) $role->remove_cap($capability);
+    	foreach ($role_list as $role => $cap) {
+            if (!in_array($role, $roles)) {
+                $obj_role = get_role($role);
+                if (is_object($obj_role) && method_exists($obj_role, 'remove_cap')) $obj_role->remove_cap($capability);
             }
-    
     	}
-	
 	}
-
 }
 
 function is_valid_mask($mask) {
@@ -305,25 +300,13 @@ function wp_power_stats_save_view_roles($input) {
     if (is_array($input) && !in_array("administrator", $input)) $input[] = "administrator";
     
     if (is_array($input)) {
-
         foreach ($input as $role) {
-            
-            // get the role object
             $role = get_role($role);
-         
-            // add "wp_power_stats_view" to this role object
-            $role->add_cap('wp_power_stats_view');   
-            
-        }        
-        
+            if (is_object($role) && method_exists($role, 'add_cap')) $role->add_cap('wp_power_stats_view');
+        }
     } else {
-        
-        // get the administrator role object
         $role = get_role("administrator");
-         
-        // add "wp_power_stats_view" to this role object
-        $role->add_cap('wp_power_stats_view');
-    
+        if (is_object($role) && method_exists($role, 'add_cap')) $role->add_cap('wp_power_stats_view');
     }
     
     wp_statistics_clean_capability($input, "wp_power_stats_view");
@@ -341,28 +324,19 @@ function wp_power_stats_save_configuration_roles($input) {
     if (is_array($input)) {
 
         foreach ($input as $role) {
-            
-            // get the role object
             $role = get_role($role);
-         
-            // add "wp_power_stats_view" to this role object
-            $role->add_cap('wp_power_stats_configure');   
-            
+            if (is_object($role) && method_exists($role, 'add_cap')) $role->add_cap('wp_power_stats_configure');
         }        
         
     } else {
-        
-        // get the administrator role object
         $role = get_role("administrator");
-         
-        // add "wp_power_stats_view" to this role object
-        $role->add_cap('wp_power_stats_configure');
-    
+        if (is_object($role) && method_exists($role, 'add_cap')) $role->add_cap('wp_power_stats_configure');
     }
     
     wp_statistics_clean_capability($input, "wp_power_stats_configure");
     
-    return implode(",", $input);
+    if (is_array($input)) return implode(",", $input);
+    else return $input;
 }
 
 function wp_power_stats_get_ip() {
