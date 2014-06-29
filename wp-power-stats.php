@@ -3,7 +3,7 @@
 Plugin Name: Power Stats
 Plugin URI: http://www.websivu.com/wp-power-stats/
 Description: Clean & simple statistics for your wordpress site.
-Version: 1.3.2
+Version: 1.3.3
 Author: Igor Buyanov
 Text Domain: wp-power-stats
 Author URI: http://www.websivu.com
@@ -31,7 +31,7 @@ if (get_option('timezone_string')) {
 }
 
 	
-define('WP_POWER_STATS_VERSION', '1.3.2');
+define('WP_POWER_STATS_VERSION', '1.3.3');
 update_option('wp_power_stats_plugin_version', WP_POWER_STATS_VERSION);
 
 if (!defined('WP_POWER_STATS_PLUGIN_DIR')) define('WP_POWER_STATS_PLUGIN_DIR', untrailingslashit(dirname(__FILE__)));
@@ -412,8 +412,7 @@ function net_match($network, $ip) {
 
     $ip_arr = explode('/', $network);
     
-    if (!isset($ip_arr[1])) $ip_arr[1] = 0;
-    
+    if (!isset($ip_arr[1])) $ip_arr[1] = 32;
     $network_long = ip2long($ip_arr[0]);
     
     $x = ip2long($ip_arr[1]);
@@ -425,23 +424,19 @@ function net_match($network, $ip) {
 
 function current_ip_ignored() {
     
-    $trigger = false;
-
-	$ignore_ips = explode("\n", get_option('wp_power_stats_ip_exclusion'));
+	$subnets = explode("\n", get_option('wp_power_stats_ip_exclusion'));
 	$current_ip = wp_power_stats_get_ip();
 	
-	foreach($ignore_ips as $ip) {
-		$ip = trim($ip);
-		
-		if(strlen($ip) > 6) {
-			if (net_match($ip, $current_ip)) {
-                $trigger = true;
+	foreach ($subnets as $subnet) {
+		$subnet = trim($subnet);
+		if (strlen($subnet) > 6) {
+			if (net_match($subnet, $current_ip)) {
+				return true;
 			}
 		}
 	}
 	
-    return $trigger;
-    
+    return false;
 }
 
 function wp_power_stats_ignore() {
