@@ -1,3 +1,27 @@
+<?php
+
+function trim_text($input, $length, $ellipses = true) {
+  
+    // no need to trim, already shorter than trim length
+    if (strlen($input) <= $length) {
+        return $input;
+    }
+  
+    // find last space within length
+    $last_space = strrpos(substr($input, 0, $length), ' ');
+    if (!$last_space) $last_space = $length;
+    $trimmed_text = substr($input, 0, $last_space);
+  
+    // add ellipses
+    if ($ellipses) {
+        $trimmed_text .= '...';
+    }
+  
+    return $trimmed_text;
+}
+
+?>
+
 <div class="wrap">
 
     <h2><?php _e('Overview','wp-power-stats') ?></h2>
@@ -298,7 +322,7 @@
                                     <tbody>
 
                                         <?php $i=1; foreach ($top_posts as $post): ?>
-        								<tr><td class="order"><?php echo $i ?>.</td><td class="link"><a href="<?php echo get_permalink($post['post_id']) ?>"><?php echo $post['title'] ?></a></td></tr>
+        								<tr><td class="order"><?php echo $i ?>.</td><td class="link"><a href="<?php echo get_permalink($post['post_id']) ?>"><?php echo trim_text($post['title'], 45) ?></a></td></tr>
         								<?php $i++; endforeach; ?>
 
                                     </tbody>
@@ -323,7 +347,7 @@
                                         <table>
                                             <tbody>
                 								<?php $i=1; foreach ($top_links as $link): ?>
-                								<tr><td class="order"><?php echo $i ?>.</td><td class="link"><a href="<?php echo $link['referer'] ?>" target="_blank"><?php echo $link['referer'] ?></a></td></tr>
+                								<tr><td class="order"><?php echo $i ?>.</td><td class="link"><a href="<?php echo $link['referer'] ?>" target="_blank"><?php echo trim_text($link['referer'], 45) ?></a></td></tr>
                 								<?php $i++; endforeach; ?>
                                             </tbody>
                                         </table>
@@ -344,7 +368,7 @@
                                         <table>
                                             <tbody>
                 								<?php $i=1; foreach ($top_searches as $search): ?>
-                								<tr><td class="order"><?php echo $i ?>.</td><td class="link"><?php echo $search['terms'] ?></td></tr>
+                								<tr><td class="order"><?php echo $i ?>.</td><td class="link"><?php echo trim_text($search['terms'], 45) ?></td></tr>
                 								<?php $i++; endforeach; ?>
                                             </tbody>
                                         </table>

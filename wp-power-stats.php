@@ -3,7 +3,7 @@
 Plugin Name: Power Stats
 Plugin URI: http://www.websivu.com/wp-power-stats/
 Description: Clean & simple statistics for your wordpress site.
-Version: 1.3.3
+Version: 1.3.4
 Author: Igor Buyanov
 Text Domain: wp-power-stats
 Author URI: http://www.websivu.com
@@ -31,7 +31,7 @@ if (get_option('timezone_string')) {
 }
 
 	
-define('WP_POWER_STATS_VERSION', '1.3.3');
+define('WP_POWER_STATS_VERSION', '1.3.4');
 update_option('wp_power_stats_plugin_version', WP_POWER_STATS_VERSION);
 
 if (!defined('WP_POWER_STATS_PLUGIN_DIR')) define('WP_POWER_STATS_PLUGIN_DIR', untrailingslashit(dirname(__FILE__)));
@@ -452,7 +452,7 @@ function wp_power_stats_init() {
 	
 	if (!is_admin() && !wp_power_stats_ignore()) { // Do not track administration backend hits and site hits if meets the criterias
 		require_once WP_POWER_STATS_PLUGIN_DIR . '/powerStats.class.php';
-		require_once WP_POWER_STATS_PLUGIN_DIR . '/vendor/mobile-detect/Mobile_Detect.php';
+		if (!class_exists('Mobile_Detect')) require_once WP_POWER_STATS_PLUGIN_DIR . '/vendor/mobile-detect/Mobile_Detect.php';
 		require_once WP_POWER_STATS_PLUGIN_DIR . '/vendor/search-terms/SearchEngines.php';
 		require_once WP_POWER_STATS_PLUGIN_DIR . '/vendor/browser-os/Browser.php';
 		$power_stats = new PowerStats($wpdb, $table_prefix, $post);
