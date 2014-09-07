@@ -28,6 +28,8 @@ class PowerStats {
 		$this->mobile_detect = new Mobile_Detect();
 		$this->browser_detect = new Browser();
 		
+		if (get_option('wp_power_stats_ignore_bots') && $this->is_bot()) return true;
+		
 		$this->read_client_info();
 		$this->log_pageviews();
 	
@@ -280,7 +282,7 @@ class PowerStats {
 	
 	protected function set_country() {
 		
-		require_once WP_POWER_STATS_PLUGIN_DIR . '/vendor/geoip/geoip.inc';
+		if (!defined('GEOIP_COUNTRY_EDITION')) require_once WP_POWER_STATS_PLUGIN_DIR . '/vendor/geoip/geoip.inc';
 
 		$gi = geoip_open(WP_POWER_STATS_PLUGIN_DIR . '/vendor/geoip/GeoIP.dat', GEOIP_STANDARD);
 		$this->country = geoip_country_code_by_addr($gi, $this->get_ip());
