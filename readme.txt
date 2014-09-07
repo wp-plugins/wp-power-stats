@@ -4,7 +4,7 @@ Donate link: http://www.websivu.com/wp-power-stats/
 Tags: statistics, stats, visit, visits, visitor, visitors, charts, analytics, tracker, hits, live visit, today, yesterday
 Requires at least: 3.3
 Tested up to: 4.0
-Stable tag: 1.3.5
+Stable tag: 1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
