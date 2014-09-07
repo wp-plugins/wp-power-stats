@@ -3,7 +3,7 @@
 Plugin Name: Power Stats
 Plugin URI: http://www.websivu.com/wp-power-stats/
 Description: Clean & simple statistics for your wordpress site.
-Version: 1.3.4
+Version: 1.3.5
 Author: Igor Buyanov
 Text Domain: wp-power-stats
 Author URI: http://www.websivu.com
