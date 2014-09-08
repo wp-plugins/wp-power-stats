@@ -22,7 +22,7 @@ A very lightweight, fast and secure plugin.
 
 This plugin does not use any 3rd party services: All statistical information collected with this plugin will be stored on your server and only you will have access to it.
 
-== Features ==
+= Features =
 
 * Page views
 * Devices
@@ -34,7 +34,7 @@ This plugin does not use any 3rd party services: All statistical information col
 * Viewed posts
 * Referers
 
-== Languages ==
+= Languages =
 
 * English
 * French
