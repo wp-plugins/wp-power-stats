@@ -2,7 +2,7 @@
 /*
 Plugin Name: WP Power Stats
 Plugin URI: http://www.websivu.com/wp-power-stats/
-Description: Powerful real-time statistics for your WordPress site.
+Description: Powerful real-time statistics of your visitors for your WordPress site.
 Version: 2.0
 Author: Igor Buyanov
 Text Domain: power-stats
