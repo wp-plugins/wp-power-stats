@@ -3,7 +3,7 @@
 Plugin Name: WP Power Stats
 Plugin URI: http://www.websivu.com/wp-power-stats/
 Description: Powerful real-time statistics of your visitors for your WordPress site.
-Version: 2.1
+Version: 2.1.1
 Author: Igor Buyanov
 Text Domain: power-stats
 Author URI: http://www.websivu.com
@@ -14,13 +14,15 @@ if (!empty(PowerStats::$options)) return true;
 
 class PowerStats
 {
-    public static $version = '2.1';
+    public static $version = '2.1.1';
     public static $options = array();
     public static $wpdb = '';
     protected static $options_hash = '';
     protected static $data = array();
     protected static $data_js = array();
     protected static $vendors = array();
+
+	const HTML_ENCODING_QUOTE_STYLE = ENT_QUOTES;
 
     /**
      * Initialize variables and actions
