@@ -89,6 +89,15 @@ class PowerStatsAdmin
     {
         $wpdb = apply_filters('power_stats_custom_wpdb', $GLOBALS['wpdb']);
 
+        // --- Updates for versions before 2.1.3 ---
+        if ((isset(PowerStats::$options['version']) && version_compare(PowerStats::$options['version'], '2.1.3', '<'))) {
+
+            // Add new options
+            PowerStats::$options['dashboard_widget'] =  'no';
+
+        }
+        // --- END: Updates for versions before 2.1.3 and after 2.0 ---
+
         // --- Updates for all versions before 2.0 ---
         if ((isset(PowerStats::$options['version']) && version_compare(PowerStats::$options['version'], '2.0', '<')) || get_option('wp_power_stats_plugin_version')) {
 
@@ -396,7 +405,7 @@ class PowerStatsAdmin
         if (current_user_can('wp_power_stats_view') || current_user_can('wp_power_stats_admin') || current_user_can('manage_options')) {
             $power_stats_icon = version_compare($GLOBALS['wp_version'], '3.8', '<') ? "div" : "dashicons-chart-pie";
             $page_method = (self::get_menu_slug() == 'wp-power-stats-view-1') ? 'wp_power_stats_include_view' : 'wp_power_stats_include_config';
-            add_menu_page(__('Statistics', 'wp-power-stats'), __('Statistics', 'wp-power-stats'), PowerStatsAdmin::current_role_capability(), self::get_menu_slug(), array(__CLASS__, $page_method), $power_stats_icon, 3.119);
+            add_menu_page(__('Statistics', 'wp-power-stats'), __('Statistics', 'wp-power-stats'), PowerStatsAdmin::current_role_capability(), self::get_menu_slug(), array(__CLASS__, $page_method), $power_stats_icon, '3.119');
         }
         return $s;
     }
